@@ -1,5 +1,5 @@
 {
-  "name": "rnpicker",
+  "name": "@hakanozdemir/react-native-picker",
   "version": "1.0.0",
   "description": "Wheel Picker for iOS & Android with react-native",
   "main": "index.tsx",
