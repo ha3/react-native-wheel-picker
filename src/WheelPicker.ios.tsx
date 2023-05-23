@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { View } from "react-native";
-import { Picker } from "@react-native-community/picker";
+import * as React from 'react';
+import { View } from 'react-native';
+import { Picker, PickerProps } from '@react-native-picker/picker';
 
 interface Props {
   data: Array<string>;
@@ -10,18 +10,27 @@ interface Props {
 }
 
 const WheelPicker: React.FC<Props> = props => {
-  const [selectedItem, setSelectedItem] = useState(props.selectedItem || 0);
+  const [selectedItem, setSelectedItem] = React.useState(props.selectedItem || 0);
   const { data, onItemSelected, disabled } = props;
-  if (!data || data.length === 0) return null;
+
+  const onValueChange = React.useCallback<NonNullable<PickerProps['onValueChange']>>(
+    (_, index) => {
+      onItemSelected && onItemSelected(index);
+      setSelectedItem(index);
+    },
+    []
+  );
+
+  if (!data || data.length === 0) {
+    return null;
+  }
+
   return (
-    <View pointerEvents={disabled ? "none" : "auto"}>
+    <View pointerEvents={disabled ? 'none' : 'auto'}>
       <Picker
         {...props}
         selectedValue={data[selectedItem]}
-        onValueChange={(value, index): void => {
-          if (onItemSelected) onItemSelected(index);
-          setSelectedItem(index);
-        }}
+        onValueChange={onValueChange}
       >
         {data.map((i, index) => (
           <Picker.Item key={index} label={i} value={i} />

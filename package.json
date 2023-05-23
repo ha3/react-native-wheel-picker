@@ -1,11 +1,11 @@
 {
-  "name": "react-native-wheel-picker-android",
-  "version": "3.0.0",
-  "description": "Simple Wheel Picker for Android to use with react-native",
+  "name": "rnpicker",
+  "version": "1.0.0",
+  "description": "Wheel Picker for iOS & Android with react-native",
   "main": "index.tsx",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kalontech/ReactNativeWheelPicker.git"
+    "url": "git+https://github.com/ha3/react-native-wheel-picker.git"
   },
   "keywords": [
     "react-component",
@@ -16,14 +16,21 @@
     "date-picker",
     "date-wheel-picker"
   ],
-  "author": "Artem Kosiakevych <artem.kosiakevych@gmail.com>",
+  "author": "Hakan Özdemir <hakanozdemir2@yandex.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kalontech/ReactNativeWheelPicker/issues"
+    "url": "https://github.com/ha3/react-native-wheel-picker/issues"
   },
-  "homepage": "https://github.com/kalontech/ReactNativeWheelPicker",
-  "dependencies": {
-    "@react-native-community/picker": "^1.8.0",
-    "moment": "^2.24.0"
+  "homepage": "https://github.com/ha3/react-native-wheel-picker",
+  "devDependencies": {
+    "react": "18.2.0",
+    "react-native": "0.71.8",
+    "@react-native-picker/picker": "^2.4.8",
+    "@types/react": "^18.0.27"
+  },
+  "peerDependencies": {
+    "@react-native-picker/picker": "^2.4.8",
+    "react": "*",
+    "react-native": "*"
   }
 }

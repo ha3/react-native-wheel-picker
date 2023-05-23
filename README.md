@@ -16,8 +16,8 @@ You can clone the repo and run example from ./example folder
 
 `yarn add react-native-wheel-picker-android`
 
-![](./src/assets/pickerAndroid.gif)
-![](./src/assets/pickerIos.gif)
+![](./assets/pickerAndroid.gif)
+![](./assets/pickerIos.gif)
 
 ## Automatic Installation
 
@@ -121,63 +121,6 @@ module.exports = MyPicker;
 | indicatorWidth | 1 | `number` | Indicator width |
 | backgroundColor | transparent | `string` | Wheel Picker background color  |
 | disabled | undefind | `bool` | Disable picker selection  |
-
-# Time Picker
-For IOs DatePickerIOS is used
-
-![](./src/assets/timePickerAndroid.gif)
-![](./src/assets/timePickerIos.gif)
-
-```js
-onTimeSelected = date => {}
-...
-<TimePicker onTimeSelected={this.onTimeSelected}/>
-
-```
-
-## Props
-
-| Prop                 |     Default      |      Type       | Description                 |
-| :------------------- | :--------------: | :-------------: | :-------------------------- |
-| [DatePickerIOS props](https://facebook.github.io/react-native/docs/datepickerios#props) |        -         |        -        | All DatePickerIOS props (IOS only) |
-| ...WheelPicker props |        -         |        -        | All style WheelPicker props (Android only) |
-| initDate             |   current date   |     `Date`      | Initial date                |
-| onTimeSelected       |        -         |     `func`      | Callback with selected time |
-| hours                |   [1,2,3,4...]   | `Array<string>` | Custom hours array (Android only)         |
-| minutes              | [00,05,10,15...] | `Array<string>` | Custom minutes array (Android only)       |
-| format24             |      false       |    `boolean`    | Time format (Android only)                |
-
-# Date Picker
-
-For IOs DatePickerIOS is used
-
-![](./src/assets/datePickerAndroid.gif)
-![](./src/assets/datePickerIos.gif)
-
-```js
-onDateSelected = date => {}
-...
-<DatePicker onDateSelected={this.onDateSelected}/>
-
-```
-
-## Props
-
-| Prop                                                                                    |     Default      |      Type       | Description                                          |
-| :-------------------------------------------------------------------------------------- | :--------------: | :-------------: | :--------------------------------------------------- |
-| [DatePickerIOS props](https://facebook.github.io/react-native/docs/datepickerios#props) |        -         |        -        | All DatePickerIOS props (IOS only)                   |
-| initDate                                                                                |   current date   |     `Date`      | Initial date                                         |
-| onDateSelected                                                                          |        -         |     `func`      | Callback with selected date                          |
-| days                                                                                    |   [1,2,3,4...]   | `Array<string>` | Custom days array (Android only)                     |
-| hours                                                                                   |   [1,2,3,4...]   | `Array<string>` | Custom hours array (Android only)                    |
-| minutes                                                                                 | [00,05,10,15...] | `Array<string>` | Custom minutes array (Android only)                  |
-| format24                                                                                |      false       |    `boolean`    | Time format (Android only)                           |
-| startDate                                                                               |   current date   |     `Date`      | Min Date (Android only)                              |
-| daysCount                                                                               |       365        |    `number`     | Days count to display from start date (Android only) |
-| hideDate                                                                                |      false       |    `boolean`    | Hide days picker (Android only)                      |
-| hideHours                                                                               |      false       |    `boolean`    | Hide hours picker (Android only)                     |
-| hideMinutes                                                                             |      false       |    `boolean`    | Hide minutes picker (Android only)                   |
-| hideAM                                                                                  |      false       |    `boolean`    | Hide time format picker (Android only)               |
 
 ## Questions or suggestions?
 
