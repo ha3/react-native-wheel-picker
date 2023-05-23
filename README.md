@@ -1,12 +1,6 @@
 # React Native Picker
 
-<p>
-<img src="http://img.shields.io/npm/v/@hozdemir/react-native-picker.svg" />
-<img src="https://img.shields.io/npm/dm/@hozdemir/react-native-picker.svg" />
-<img src="https://img.shields.io/npm/dt/@hozdemir/react-native-picker.svg" />
-</p>
-
-A simple Wheel Picker for Android (For IOs is using Picker from react-native)
+A simple Wheel Picker for Android (For IOs is using Picker from react-native-picker/picker)
 
 ## Example
 
@@ -14,7 +8,7 @@ You can clone the repo and run example from ./example folder
 
 ## Installation
 
-`yarn add @hozdemir/react-native-picker`
+`yarn add @hakanozdemir/react-native-picker`
 
 ![](./assets/pickerAndroid.gif)
 ![](./assets/pickerIos.gif)
@@ -24,8 +18,8 @@ You can clone the repo and run example from ./example folder
 In `android/settings.gradle`
 
 ```
-include ':@hozdemir/react-native-picker'
-project(':@hozdemir/react-native-picker').projectDir = new File(rootProject.projectDir, '../node_modules/@hozdemir/react-native-picker/android')
+include ':@hakanozdemir/react-native-picker'
+project(':@hakanozdemir/react-native-picker').projectDir = new File(rootProject.projectDir, '../node_modules/@hakanozdemir/react-native-picker/android')
 ```
 
 In `android/app/build.gradle`
@@ -33,7 +27,7 @@ In `android/app/build.gradle`
 ```
 dependencies {
     ...
-    compile project(':@hozdemir/react-native-picker')
+    compile project(':@hakanozdemir/react-native-picker')
 }
 ```
 
@@ -49,7 +43,7 @@ protected List<ReactPackage> getPackages() {
 # Usage
 
 ```js
-import { WheelPicker, TimePicker, DatePicker } from '@hozdemir/react-native-picker';
+import { WheelPicker, TimePicker, DatePicker } from '@hakanozdemir/react-native-picker';
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Button } from 'react-native';
 

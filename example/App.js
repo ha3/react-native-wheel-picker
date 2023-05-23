@@ -21,7 +21,7 @@ import {
   WheelPicker,
   TimePicker,
   DatePicker,
-} from '@hozdemir/react-native-picker';
+} from '@hakanozdemir/react-native-picker';
 
 const weekdays = [
   'sunday',

@@ -23,10 +23,10 @@
   },
   "homepage": "https://github.com/ha3/react-native-wheel-picker",
   "devDependencies": {
-    "react": "18.2.0",
-    "react-native": "0.71.8",
     "@react-native-picker/picker": "^2.4.8",
-    "@types/react": "^18.0.27"
+    "@types/react": "^18.0.27",
+    "react": "18.2.0",
+    "react-native": "0.71.8"
   },
   "peerDependencies": {
     "@react-native-picker/picker": "^2.4.8",
