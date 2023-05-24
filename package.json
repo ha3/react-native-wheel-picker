@@ -1,6 +1,6 @@
 {
   "name": "@hakanozdemir/react-native-picker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Wheel Picker for iOS & Android with react-native",
   "main": "index.tsx",
   "repository": {
