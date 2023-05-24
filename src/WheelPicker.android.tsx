@@ -1,10 +1,10 @@
 import React from 'react';
 import { requireNativeComponent, View } from 'react-native';
 
-import type { WheelPickerItem } from './types';
+import type { WheelPickerItem, WheelPickerProps } from './types';
 
-type Props = {
-  items: WheelPickerItem[];
+type NativeComponentProps = {
+  data: string[];
   isCyclic?: boolean;
   selectedItemTextColor?: string;
   selectedItemTextSize?: number;
@@ -15,18 +15,13 @@ type Props = {
   itemTextSize?: number;
   selectedItem?: number;
   backgroundColor?: string;
-  onItemSelected?: (arg: number) => void;
+  onChange?: (arg: number) => void;
   disabled?: boolean;
 };
 
-const WheelPickerView = requireNativeComponent<
-  Omit<Props, 'data' | 'onItemSelected'> & {
-    data: string[];
-    onChange?: (event: any) => void;
-  }
->('WheelPicker');
+const WheelPickerView = requireNativeComponent<NativeComponentProps>('WheelPicker');
 
-export default class WheelPicker extends React.Component<Props> {
+export default class WheelPicker extends React.Component<WheelPickerProps> {
   static defaultProps = {
     style: {
       width: 'auto',
@@ -41,7 +36,7 @@ export default class WheelPicker extends React.Component<Props> {
   };
 
   render() {
-    const { isCyclic, items } = this.props;
+    const { items } = this.props;
     const data = items.map(i => i.value?.toString()).filter(Boolean) as string[];
 
     return (
@@ -49,7 +44,7 @@ export default class WheelPicker extends React.Component<Props> {
         <WheelPickerView
           {...this.props}
           data={data}
-          isCyclic={data.length > 2 ? isCyclic : false}
+          isCyclic={data.length > 2}
           onChange={this.onItemSelected}
         />
       </View>
