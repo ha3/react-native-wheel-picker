@@ -1,5 +1,6 @@
-import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import type React from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import type { PickerItemProps } from '@react-native-picker/picker';
 
 interface IStyle {
   selectedItemTextColor?: string;
@@ -15,8 +16,12 @@ interface IStyle {
   style?: StyleProp<ViewStyle>;
 }
 
+export interface WheelPickerItem extends PickerItemProps {
+  key?: string;
+}
+
 export interface IPropsWheelPicker extends IStyle {
-  data: string[];
+  data: WheelPickerItem[];
   isCyclic?: boolean;
   initPosition?: number;
   selectedItem?: number;

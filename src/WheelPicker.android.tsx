@@ -1,8 +1,10 @@
 import React from 'react';
 import { requireNativeComponent, View } from 'react-native';
 
+import type { WheelPickerItem } from './types';
+
 type Props = {
-  data: Array<string>;
+  items: WheelPickerItem[];
   isCyclic?: boolean;
   selectedItemTextColor?: string;
   selectedItemTextSize?: number;
@@ -18,7 +20,10 @@ type Props = {
 };
 
 const WheelPickerView = requireNativeComponent<
-  Omit<Props, 'onItemSelected'> & { onChange?: (event: any) => void }
+  Omit<Props, 'data' | 'onItemSelected'> & {
+    data: string[];
+    onChange?: (event: any) => void;
+  }
 >('WheelPicker');
 
 export default class WheelPicker extends React.Component<Props> {
@@ -36,12 +41,14 @@ export default class WheelPicker extends React.Component<Props> {
   };
 
   render() {
-    const { isCyclic, data } = this.props;
+    const { isCyclic, items } = this.props;
+    const data = items.map(i => i.value?.toString()).filter(Boolean) as string[];
 
     return (
       <View pointerEvents={this.props.disabled ? 'none' : 'auto'}>
         <WheelPickerView
           {...this.props}
+          data={data}
           isCyclic={data.length > 2 ? isCyclic : false}
           onChange={this.onItemSelected}
         />
