@@ -21,7 +21,7 @@ export interface WheelPickerItem extends PickerItemProps {
 }
 
 export interface IPropsWheelPicker extends IStyle {
-  data: WheelPickerItem[];
+  items: WheelPickerItem[];
   isCyclic?: boolean;
   initPosition?: number;
   selectedItem?: number;

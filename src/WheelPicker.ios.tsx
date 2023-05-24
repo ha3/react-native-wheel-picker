@@ -29,6 +29,8 @@ const WheelPicker: React.FC<Props> = props => {
     return null;
   }
 
+  console.log('Picker', Picker);
+
   return (
     <View pointerEvents={disabled ? 'none' : 'auto'}>
       <Picker
