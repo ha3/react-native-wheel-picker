@@ -4,10 +4,6 @@ export interface WheelPickerItem extends PickerItemProps {
   key?: string;
 }
 
-export interface WheelPickerProps {
+export interface WheelPickerProps extends PickerProps {
   items: WheelPickerItem[];
-  selectedIndex?: number;
-  enabled?: boolean;
-  onValueChange?: PickerProps['onValueChange'];
-  style?: PickerProps['style'];
 }
