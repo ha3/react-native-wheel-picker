@@ -149,7 +149,7 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
     public void onItemSelect(LoopView picker, ReadableMap item, int position) {
         if (wheelPicker != null) {
             WritableMap event = Arguments.createMap();
-            event.putInt("value", item.get("value"));
+            event.putInt("value", item.getInt("value"));
             event.putInt("position", position);
             ((ReactContext) wheelPicker.getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(
                     picker.getId(),

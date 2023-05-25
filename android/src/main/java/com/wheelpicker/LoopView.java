@@ -177,8 +177,8 @@ public class LoopView extends View {
         }
     }
 
-    private final Map getSelectedItem() {
-        return arrayList.get(selectedIndex);
+    private final ReadableMap getSelectedItem() {
+        return arrayList.getMap(selectedIndex);
     }
 
     private final int getCurrentIndex() {
@@ -186,8 +186,8 @@ public class LoopView extends View {
     }
 
     private final int getPositionOfElement(String label) {
-        for(int i = 0; i < arrayList.size(); i++) {
-            if(arrayList.get(i).get("label").equals(label)) {
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (getItem(i).getString("label").equals(label)) {
                 return i;
             }
         }
