@@ -1,5 +1,6 @@
 node_modules
 npm-debug.log
+.vscode
 
 # Android/IntelliJ
 #
@@ -9,3 +10,6 @@ build/
 local.properties
 *.iml
 yarn-error.log
+android/gradle/
+android/gradlew
+android/gradlew.bat

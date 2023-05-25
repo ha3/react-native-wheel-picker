@@ -44,7 +44,7 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
             try {
                 wheelPicker.setArrayList(data);
             } catch (Exception e) {
-                ex.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
