@@ -1,8 +1,8 @@
 package com.wheelpicker;
 
-import java.util.Map;
+import com.facebook.react.bridge.ReadableMap;
 
 public interface LoopListener {
-    void onItemSelect(LoopView view, Map item, int position);
+    void onItemSelect(LoopView view, ReadableMap item, int position);
 }
 

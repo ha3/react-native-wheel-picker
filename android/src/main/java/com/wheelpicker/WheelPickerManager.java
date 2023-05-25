@@ -20,7 +20,6 @@ import com.facebook.react.views.text.ReactFontManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class WheelPickerManager extends SimpleViewManager<LoopView> implements LoopListener {
     LoopView wheelPicker;
