@@ -10,6 +10,7 @@ import android.util.Log;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -19,8 +20,9 @@ import com.facebook.react.views.text.ReactFontManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class WheelPickerManager extends SimpleViewManager<LoopView> implements LoopListener{
+public class WheelPickerManager extends SimpleViewManager<LoopView> implements LoopListener {
     LoopView wheelPicker;
     public static final String REACT_CLASS = "WheelPicker";
 
@@ -38,25 +40,11 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
 
     @ReactProp(name = "data")
     public void setData(LoopView wheelPicker, ReadableArray data) {
-        if (wheelPicker!=null){
-            List<String> emptyList = new ArrayList<>();
+        if (wheelPicker != null) {
             try {
-                List<Integer> dataInt = new ArrayList<>();
-                for (int i = 0; i <data.size() ; i++) {
-                    dataInt.add(data.getInt(i));
-                }
-                wheelPicker.setArrayList((ArrayList) dataInt);
-            } catch (Exception e){
-                try {
-                    List<String> dataString = new ArrayList<>();
-                    for (int i = 0; i <data.size() ; i++) {
-                        dataString.add(data.getString(i));
-                    }
-                    wheelPicker.setArrayList((ArrayList) dataString);
-                } catch (Exception ex){
-                    ex.printStackTrace();
-                    wheelPicker.setArrayList((ArrayList) emptyList);
-                }
+                wheelPicker.setArrayList(data);
+            } catch (Exception e) {
+                ex.printStackTrace();
             }
         }
     }
@@ -151,17 +139,18 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
 
     @ReactProp(name = "selectedItem")
     public void setSelectedItem(LoopView wheelPicker, int pos) {
-        if (wheelPicker!=null){
+        if (wheelPicker != null) {
             wheelPicker.setSelectedItem(pos);
         }
     }
 
 
     @Override
-    public void onItemSelect(LoopView picker, int item) {
-        if (wheelPicker != null){
+    public void onItemSelect(LoopView picker, ReadableMap item, int position) {
+        if (wheelPicker != null) {
             WritableMap event = Arguments.createMap();
-            event.putInt("position", item);
+            event.putInt("value", item.get("value"));
+            event.putInt("position", position);
             ((ReactContext) wheelPicker.getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(
                     picker.getId(),
                     "topChange",

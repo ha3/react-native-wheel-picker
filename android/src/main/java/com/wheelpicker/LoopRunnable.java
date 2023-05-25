@@ -1,4 +1,7 @@
 package com.wheelpicker;
+
+import java.util.Map;
+
 final class LoopRunnable implements Runnable {
 
     final LoopView loopView;
@@ -12,8 +15,8 @@ final class LoopRunnable implements Runnable {
     @Override
     public final void run() {
         LoopListener listener = loopView.loopListener;
-        int selectedItem = LoopView.getSelectedItem(loopView);
-        loopView.arrayList.get(selectedItem);
-        listener.onItemSelect(loopView, selectedItem);
+        Map selectedItem = LoopView.getSelectedItem(loopView);
+        int currentIndex = LoopView.getCurrentIndex(loopView);
+        listener.onItemSelect(loopView, selectedItem, currentIndex);
     }
 }
