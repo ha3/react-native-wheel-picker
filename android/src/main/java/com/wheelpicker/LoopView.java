@@ -104,7 +104,7 @@ public class LoopView extends View {
         gestureDetector.setIsLongpressEnabled(false);
     }
 
-    static Map getSelectedItem(LoopView loopview) {
+    static ReadableMap getSelectedItem(LoopView loopview) {
         return loopview.getSelectedItem();
     }
 

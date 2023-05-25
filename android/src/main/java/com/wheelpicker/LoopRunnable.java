@@ -1,6 +1,6 @@
 package com.wheelpicker;
 
-import java.util.Map;
+import com.facebook.react.bridge.ReadableMap;
 
 final class LoopRunnable implements Runnable {
 
@@ -15,7 +15,7 @@ final class LoopRunnable implements Runnable {
     @Override
     public final void run() {
         LoopListener listener = loopView.loopListener;
-        Map selectedItem = LoopView.getSelectedItem(loopView);
+        ReadableMap selectedItem = LoopView.getSelectedItem(loopView);
         int currentIndex = LoopView.getCurrentIndex(loopView);
         listener.onItemSelect(loopView, selectedItem, currentIndex);
     }
