@@ -1,7 +1,10 @@
-import type { WheelPickerProps } from './types';
+import React from 'react';
+import type { PickerComponent } from './types';
 
-const WheelPicker: React.FC<WheelPickerProps> = () => {
+const WheelPicker: PickerComponent = () => {
   return null;
 };
+
+WheelPicker.Item = () => null;
 
 export default WheelPicker;

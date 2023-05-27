@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { isValidElement, useCallback, useMemo, Children } from 'react';
 import { requireNativeComponent, StyleSheet, View } from 'react-native';
 
-import type { WheelPickerItem, WheelPickerProps } from './types';
+console.log("KEReact", React)
+
+import type { PickerComponent } from './types';
+import { notEmpty } from './utils';
 
 type NativeComponentProps = {
-  data: WheelPickerItem[];
+  data: string[];
   isCyclic?: boolean;
   selectedItemTextColor?: string;
   selectedItemTextSize?: number;
@@ -21,37 +24,90 @@ type NativeComponentProps = {
 
 const WheelPickerView = requireNativeComponent<NativeComponentProps>('WheelPicker');
 
-export default class WheelPicker extends React.Component<WheelPickerProps> {
-  static defaultProps = {
-    style: {
-      width: 'auto',
-      height: 150
-    }
+const WheelPicker: PickerComponent = props => {
+  const {
+    children,
+    enabled = true,
+    itemStyle,
+    selectedValue,
+    onValueChange,
+    style,
+    ...rest
+  } = props;
+  const _itemStyle = StyleSheet.flatten(itemStyle);
+  const _style = style || {
+    width: 'auto',
+    height: 150
   };
 
-  onItemSelected = (event: any) => {
-    if (this.props.onValueChange) {
-      this.props.onValueChange(event.nativeEvent.value, event.nativeEvent.position);
-    }
-  };
+  const [items, selected] = useMemo(() => {
+    let selected = 0;
 
-  render() {
-    const { items, enabled = true, itemStyle, selectedValue, ...props } = this.props;
+    const _items = Children.toArray(props.children)
+      .map((child, index) => {
+        if (!isValidElement(child)) {
+          return;
+        }
 
-    const _itemStyle = StyleSheet.flatten(itemStyle);
+        if (child.props.value === selectedValue) {
+          selected = index;
+        }
 
-    return (
-      <View pointerEvents={enabled ? 'auto' : 'none'} style={this.props.style}>
-        <WheelPickerView
-          {...props}
-          disabled={!enabled}
-          data={items}
-          isCyclic={items.length > 2}
-          onChange={this.onItemSelected}
-          itemTextColor={_itemStyle.color?.toString()}
-          itemTextSize={_itemStyle.fontSize}
-        />
-      </View>
-    );
-  }
-}
+        const { label } = child.props;
+
+        return label as string;
+      })
+      .filter(notEmpty);
+
+    return [_items, selected];
+  }, [children, selectedValue]);
+
+  const onSelect = useCallback(
+    ({ nativeEvent }) => {
+      const { position }: { position: number } = nativeEvent;
+
+      if (onValueChange !== undefined) {
+        if (position >= 0) {
+          const child = Children.toArray(children).filter(item => item != null)[
+            position
+          ];
+
+          if (!isValidElement(child)) {
+            // @ts-expect-error
+            onValueChange(null, position);
+          } else {
+            const value = child.props.value;
+
+            if (props.selectedValue !== value) {
+              onValueChange(value, position);
+            }
+          }
+        } else {
+          // @ts-expect-error
+          onValueChange(null, position);
+        }
+      }
+    },
+    [children, onValueChange, selectedValue, selected]
+  );
+
+  return (
+    <View pointerEvents={enabled ? 'auto' : 'none'} style={style}>
+      <WheelPickerView
+        {...rest}
+        // @ts-expect-error
+        style={_style}
+        disabled={!enabled}
+        data={items}
+        isCyclic={items.length > 2}
+        onChange={onSelect}
+        itemTextColor={_itemStyle.color?.toString()}
+        itemTextSize={_itemStyle.fontSize}
+      />
+    </View>
+  );
+};
+
+WheelPicker.Item = () => null;
+
+export default WheelPicker;

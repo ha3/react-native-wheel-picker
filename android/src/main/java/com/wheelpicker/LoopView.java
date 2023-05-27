@@ -13,14 +13,11 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
-import com.facebook.react.bridge.ReadableArray;
-import com.facebook.react.bridge.ReadableMap;
 
 public class LoopView extends View {
     ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -29,13 +26,13 @@ public class LoopView extends View {
     Handler handler;
     LoopListener loopListener;
     private GestureDetector gestureDetector;
-    private int selectedIndex;
+    private int selectedItem;
     private GestureDetector.SimpleOnGestureListener simpleOnGestureListener;
     Context context;
     Paint paintA;  //paint that draw top and bottom text
     Paint paintB;  // paint that draw center text
     Paint paintC;  // paint that draw line besides center text
-    ReadableArray arrayList;
+    ArrayList arrayList;
     int textSize;
     int maxTextWidth;
     int maxTextHeight;
@@ -104,12 +101,8 @@ public class LoopView extends View {
         gestureDetector.setIsLongpressEnabled(false);
     }
 
-    static ReadableMap getSelectedItem(LoopView loopview) {
-        return loopview.getSelectedItem();
-    }
-
-    static int getCurrentIndex(LoopView loopview) {
-        return loopview.getCurrentIndex();
+    static int getSelectedItem(LoopView loopview) {
+        return loopview.selectedItem;
     }
 
     static void smoothScroll(LoopView loopview) {
@@ -141,17 +134,11 @@ public class LoopView extends View {
         preCurrentIndex = initPosition;
     }
 
-    public ReadableMap getItem(int position) {
-      if (arrayList == null) return null;
-
-      return arrayList.getMap(position);
-    }
-
     private void measureTextWidthHeight() {
         Rect rect = new Rect();
         for (int i = 0; i < arrayList.size(); i++) {
-            String label = (String) getItem(i).getString("label");
-            paintB.getTextBounds(label, 0, label.length(), rect);
+            String s1 = (String) arrayList.get(i);
+            paintB.getTextBounds(s1, 0, s1.length(), rect);
             int textWidth = rect.width();
             if (textWidth > maxTextWidth) {
                 maxTextWidth = textWidth;
@@ -162,7 +149,9 @@ public class LoopView extends View {
                 maxTextHeight = textHeight;
             }
         }
+
     }
+
 
     private void smoothScroll() {
         int offset = (int) (totalScrollY % (lineSpacingMultiplier * maxTextHeight));
@@ -177,22 +166,8 @@ public class LoopView extends View {
         }
     }
 
-    private final ReadableMap getSelectedItem() {
-        return arrayList.getMap(selectedIndex);
-    }
-
-    private final int getCurrentIndex() {
-        return selectedIndex;
-    }
-
-    private final int getPositionOfElement(String label) {
-        for (int i = 0; i < arrayList.size(); i++) {
-            if (getItem(i).getString("label").equals(label)) {
-                return i;
-            }
-        }
-
-        return initPosition;
+    public final int getSelectedItem() {
+        return selectedItem;
     }
 
     protected final void smoothScroll(float velocityY) {
@@ -247,13 +222,13 @@ public class LoopView extends View {
                 if (l1 > arrayList.size() - 1) {
                     l1 = l1 - arrayList.size();
                 }
-                as[k1] = (String) getItem(l1).getString("label");
+                as[k1] = (String) arrayList.get(l1);
             } else if (l1 < 0) {
                 as[k1] = "";
             } else if (l1 > arrayList.size() - 1) {
                 as[k1] = "";
             } else {
-                as[k1] = (String) getItem(l1).getString("label");
+                as[k1] = (String) arrayList.get(l1);
             }
             k1++;
         }
@@ -295,7 +270,7 @@ public class LoopView extends View {
                 } else if (translateY >= firstLineY && maxTextHeight + translateY <= secondLineY) {
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
                     drawCenter(canvas, paintB, as[j1],maxTextHeight);
-                    selectedIndex = getPositionOfElement(as[j1]);
+                    selectedItem = arrayList.indexOf(as[j1]);
                 } else {
                     canvas.clipRect(0, 0, measuredWidth, (int) (itemHeight));
                     drawCenter(canvas, paintA, as[j1],maxTextHeight);
@@ -392,7 +367,7 @@ public class LoopView extends View {
         loopListener = LoopListener;
     }
 
-    public final void setArrayList(ReadableArray arraylist) {
+    public final void setArrayList(ArrayList arraylist) {
         this.arrayList = arraylist;
         initData();
         invalidate();
