@@ -69,9 +69,9 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
     }
 
     @ReactProp(name = "selectedItemTextColor")
-    public void setSelectedItemTextColor(LoopView wheelPicker, String selectedItemTextColor) {
+    public void setSelectedItemTextColor(LoopView wheelPicker, int selectedItemTextColor) {
         if (wheelPicker!=null){
-            wheelPicker.setSelectedItemTextColor(convertColor(selectedItemTextColor));
+            wheelPicker.setSelectedItemTextColor(selectedItemTextColor);
         }
     }
 
@@ -106,16 +106,16 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
     }
 
     @ReactProp(name = "indicatorColor")
-    public void setIndicatorColor(LoopView wheelPicker, String indicatorColor) {
+    public void setIndicatorColor(LoopView wheelPicker, int indicatorColor) {
         if (wheelPicker!=null){
-            wheelPicker.setIndicatorColor(convertColor(indicatorColor));
+            wheelPicker.setIndicatorColor(indicatorColor);
         }
     }
 
     @ReactProp(name = "itemTextColor")
-    public void setItemTextColor(LoopView wheelPicker, String itemTextColor) {
+    public void setItemTextColor(LoopView wheelPicker, int itemTextColor) {
         if (wheelPicker!=null){
-            wheelPicker.setItemTextColor(convertColor(itemTextColor));
+            wheelPicker.setItemTextColor(itemTextColor);
         }
     }
 
@@ -142,9 +142,9 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
     }
 
     @ReactProp(name = "backgroundColor")
-    public void setBackgroundColor(LoopView wheelPicker, String backgroundColor) {
-        if (wheelPicker!=null){
-            wheelPicker.setBackgroundColor(convertColor(backgroundColor));
+    public void setBackgroundColor(LoopView wheelPicker, int backgroundColor) {
+        if (wheelPicker != null){
+            wheelPicker.setBackgroundColor(backgroundColor);
         }
     }
 
@@ -166,24 +166,6 @@ public class WheelPickerManager extends SimpleViewManager<LoopView> implements L
                     picker.getId(),
                     "topChange",
                     event);
-        }
-    }
-
-    private int convertColor(String color){
-        if (!color.startsWith("rgb")) {
-            return Color.parseColor(color);
-        } else  {
-            String[] colors = color.substring(color.indexOf("(") + 1, color.length() - 1 ).split(",");
-            int red = Integer.parseInt(colors[0].trim());
-            int green = Integer.parseInt(colors[1].trim());
-            int blue = Integer.parseInt(colors[2].trim());
-            double opacity = 1;
-            if (colors.length > 3){
-                opacity = Double.parseDouble(colors[3].trim());
-            }
-            int alpha = (int)(opacity * 255.0f);
-
-            return Color.argb(alpha,red,green,blue);
         }
     }
 }

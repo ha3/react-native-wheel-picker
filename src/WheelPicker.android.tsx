@@ -1,7 +1,13 @@
 import React, { isValidElement, useCallback, useMemo, Children } from 'react';
-import { requireNativeComponent, StyleSheet, View } from 'react-native';
-
-console.log("KEReact", React)
+import {
+  processColor,
+  ProcessedColorValue,
+  requireNativeComponent,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View
+} from 'react-native';
 
 import type { PickerComponent } from './types';
 import { notEmpty } from './utils';
@@ -9,16 +15,17 @@ import { notEmpty } from './utils';
 type NativeComponentProps = {
   data: string[];
   isCyclic?: boolean;
-  selectedItemTextColor?: string;
-  selectedItemTextSize?: number;
   indicatorWidth?: number;
   hideIndicator?: boolean;
-  indicatorColor?: string;
-  itemTextColor?: string;
+  selectedItemTextSize?: number;
+  selectedItemTextColor?: ProcessedColorValue | null;
+  indicatorColor?: ProcessedColorValue | null;
+  backgroundColor?: ProcessedColorValue | null;
+  itemTextColor?: ProcessedColorValue | null;
   itemTextSize?: number;
-  backgroundColor?: string;
-  selectedValue?: number | string;
+  selectedItem: number;
   onChange?: (event: any) => void;
+  style?: StyleProp<TextStyle>;
   disabled?: boolean;
 };
 
@@ -28,17 +35,13 @@ const WheelPicker: PickerComponent = props => {
   const {
     children,
     enabled = true,
-    itemStyle,
+    selectionColor,
     selectedValue,
-    onValueChange,
-    style,
-    ...rest
+    onValueChange
   } = props;
-  const _itemStyle = StyleSheet.flatten(itemStyle);
-  const _style = style || {
-    width: 'auto',
-    height: 150
-  };
+  const itemStyle = StyleSheet.flatten(props.itemStyle) || {};
+  const style = StyleSheet.flatten(props.style) || {};
+  const selectedItemStyle = StyleSheet.flatten(props.selectedItemStyle) || {};
 
   const [items, selected] = useMemo(() => {
     let selected = 0;
@@ -55,7 +58,11 @@ const WheelPicker: PickerComponent = props => {
 
         const { label } = child.props;
 
-        return label as string;
+        if (typeof label !== 'string') {
+          return;
+        }
+
+        return label;
       })
       .filter(notEmpty);
 
@@ -94,15 +101,22 @@ const WheelPicker: PickerComponent = props => {
   return (
     <View pointerEvents={enabled ? 'auto' : 'none'} style={style}>
       <WheelPickerView
-        {...rest}
-        // @ts-expect-error
-        style={_style}
+        style={style}
+        selectedItem={selected}
         disabled={!enabled}
         data={items}
         isCyclic={items.length > 2}
         onChange={onSelect}
-        itemTextColor={_itemStyle.color?.toString()}
-        itemTextSize={_itemStyle.fontSize}
+        itemTextColor={processColor(itemStyle.color || style.color)}
+        itemTextSize={itemStyle.fontSize}
+        selectedItemTextColor={processColor(
+          selectedItemStyle.color || itemStyle.color || style.color
+        )}
+        selectedItemTextSize={
+          selectedItemStyle.fontSize || itemStyle.fontSize || style.fontSize
+        }
+        backgroundColor={processColor(style.backgroundColor)}
+        indicatorColor={processColor(selectionColor)}
       />
     </View>
   );
