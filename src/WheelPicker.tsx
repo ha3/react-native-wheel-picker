@@ -1,4 +1,3 @@
-import React from 'react';
 import type { PickerComponent } from './types';
 
 const WheelPicker: PickerComponent = () => {

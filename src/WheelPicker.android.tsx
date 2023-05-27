@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import type { PickerComponent } from './types';
-import { notEmpty } from './utils';
+import { notEmpty, removeKeys } from './utils';
 
 type NativeComponentProps = {
   data: string[];
@@ -99,9 +99,12 @@ const WheelPicker: PickerComponent = props => {
   );
 
   return (
-    <View pointerEvents={enabled ? 'auto' : 'none'} style={style}>
+    <View
+      pointerEvents={enabled ? 'auto' : 'none'}
+      style={removeKeys(style, ['backgroundColor', 'color'])}
+    >
       <WheelPickerView
-        style={style}
+        style={removeKeys(style, ['backgroundColor', 'color'])}
         selectedItem={selected}
         disabled={!enabled}
         data={items}

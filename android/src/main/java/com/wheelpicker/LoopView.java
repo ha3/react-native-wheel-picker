@@ -87,6 +87,7 @@ public class LoopView extends View {
         handler = new MessageHandler(this);
         this.context = context;
         setTextSize(16F);
+        setForegroundGravity(11); // center
 
         paintA = new Paint();
         paintA.setColor(colorGrayLight);
